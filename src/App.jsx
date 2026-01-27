@@ -10,7 +10,9 @@ import AdminDashboard from "./Auth/AdminDashboard";
 import AdminHero from "./admin/AdminHero";
 import AdminAbout from "./admin/AdminAbout";
 import AdminServices from "./admin/AdminServices";
-import AdminNavbar from "./admin/Adminnavbar";
+
+import AdminNavbar from "./admin/AdminNavbar";
+
 import AdminProjects from "./admin/AdminProjects";
 
 /* ===== PUBLIC ===== */
