@@ -1,0 +1,95 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+/* ===== ADMIN ===== */
+import AdminLogin from "./Auth/AdminLogin";
+import AdminRegister from "./Auth/AdminRegister";
+import AdminProtected from "./shere/AdminProtected";
+import AdminHome from "./Auth/AdminHome";
+import AdminProfile from "./Auth/AdminProfile";
+import AdminDashboard from "./Auth/AdminDashboard";
+import AdminHero from "./admin/AdminHero";
+import AdminAbout from "./admin/AdminAbout";
+import AdminServices from "./admin/AdminServices";
+import AdminNavbar from "./admin/Adminnavbar";
+import AdminProjects from "./admin/AdminProjects";
+
+/* ===== PUBLIC ===== */
+import PublicLayout from "./layout/PublicLayout";
+import Hero from "./pages/Hero";
+import About from "./pages/About";
+import Home from "./layout/Home";
+import Services from "./pages/Services";
+import ServiceDetails from "./pages/ServiceDetails";
+import Contact from "./pages/Contact";
+import Projects from "./pages/Projects";
+import ProjectDetails from "./pages/ProjectDetails";
+import Pricing from "./pages/Pricing";
+import AddAdminProject from "./admin/AddAdminProject";
+import Booking from "./pages/Booking";
+import AdminPricing from "./admin/AdminPricing";
+import AdminBookings from "./admin/AdminBookings";
+import BookingSuccess from "./pages/BookingSuccess";
+import AdminContacts from "./admin/AdminContacts";
+import AdminFooter from "./admin/AdminFooter";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+       {/* ================= PUBLIC ================= */}
+<Route element={<PublicLayout />}>
+  <Route index element={<Home />} />
+  <Route path="home" element={<Hero />} />
+  <Route path="about" element={<About />} />
+  <Route path="services" element={<Services />} />
+  <Route path="services/:slug" element={<ServiceDetails />} />
+  <Route path="projects" element={<Projects />} />
+  <Route path="projects/:slug" element={<ProjectDetails />} />
+  <Route path="pricing" element={<Pricing />} />
+  <Route path="/booking-success" element={<BookingSuccess />} />
+
+  ✅ <Route path="booking/:id" element={<Booking />} />
+
+  <Route path="contact" element={<Contact />} />
+</Route>
+
+
+        {/* ================= ADMIN AUTH ================= */}
+        <Route path="/adminlogin" element={<AdminLogin />} />
+        <Route path="/adminregister" element={<AdminRegister />} />
+
+        {/* ================= ADMIN PANEL ================= */}
+       <Route
+  path="/admin"
+  element={
+    <AdminProtected>
+      <AdminDashboard />
+    </AdminProtected>
+  }
+>
+  <Route index element={<AdminHome />} />
+  <Route path="profile" element={<AdminProfile />} />
+  <Route path="navbar" element={<AdminNavbar />} />
+  <Route path="hero" element={<AdminHero />} />
+  <Route path="about" element={<AdminAbout />} />
+  <Route path="services" element={<AdminServices />} />
+  <Route path="booking/:id" element={<Booking />} />
+
+  {/* PROJECTS */}
+  <Route path="projects" element={<AdminProjects />} />
+  <Route path="projects/new" element={<AddAdminProject />} />   {/* ADD */}
+  <Route path="projects/edit/:id" element={<AddAdminProject />} /> {/* EDIT */}
+
+  <Route path="pricing" element={<AdminPricing />} /> 
+  <Route path="bookings" element={<AdminBookings />} />
+  <Route path="contacts" element={<AdminContacts />} />
+  <Route path="footer" element={<AdminFooter />} />
+</Route>
+
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
