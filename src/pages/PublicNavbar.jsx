@@ -1,67 +1,119 @@
 
-
-// import { Phone } from "lucide-react";
+// import { Phone, ChevronDown } from "lucide-react";
 // import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
+// import { useGetPublicServicesQuery } from "../redux/apis/serviceApi";
+// import { useState, useRef } from "react";
+// import { useNavigate } from "react-router-dom";
 
 // export default function PublicNavbar() {
 //   const { data, isLoading } = useGetPublicNavbarQuery();
+//   const { data: services } = useGetPublicServicesQuery();
+//   const [open, setOpen] = useState(false);
+//   const timeoutRef = useRef(null);
+//   const navigate = useNavigate();
 
 //   if (isLoading || !data) return null;
 
-//  const handleScroll = (link) => {
-//   const id = link.replace("/", ""); // "/about" -> "about"
-//   const el = document.getElementById(id);
+//   const handleOpen = () => {
+//     clearTimeout(timeoutRef.current);
+//     setOpen(true);
+//   };
 
-//   if (el) {
-//     el.scrollIntoView({ behavior: "smooth" });
-//   }
-// };
-
+//   const handleClose = () => {
+//     timeoutRef.current = setTimeout(() => {
+//       setOpen(false);
+//     }, 250);
+//   };
 
 //   return (
-//     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm">
+//     <header className="sticky top-0 z-50 bg-white shadow-sm">
 //       <div className="max-w-7xl mx-auto px-8">
 //         <div className="flex items-center justify-between h-20">
 
-//           {/* LOGO + BRAND */}
-//           <div className="flex items-center gap-3">
+//           {/* LOGO */}
+//           <div
+//             className="flex items-center gap-3 cursor-pointer"
+//             onClick={() => navigate("/")}
+//           >
 //             {data.logoImage ? (
-//               <img
-//                 src={data.logoImage}
-//                 alt="logo"
-//                 className="h-14 w-auto object-contain"
-//               />
+//               <img src={data.logoImage} alt="logo" className="h-14" />
 //             ) : (
 //               <div className="h-14 w-14 bg-red-500 text-white flex items-center justify-center rounded-md text-xl">
 //                 ⚡
 //               </div>
 //             )}
-
-//             <span className="text-lg font-semibold tracking-wide text-gray-900">
+//             <span className="text-lg font-semibold text-gray-900">
 //               {data.logoText}
 //             </span>
 //           </div>
 
-//           {/* NAV LINKS */}
-//           <nav className="hidden md:flex items-center gap-10">
-//             {data.menu.map((item, index) => (
-//               <button
-//                 key={index}
-//                 onClick={() => handleScroll(item.link)}
-//                 className="relative text-sm font-medium text-gray-700 hover:text-red-500 transition"
-//               >
-//                 {item.label}
-//                 <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-red-500 scale-x-0 hover:scale-x-100 transition-transform origin-left" />
-//               </button>
-//             ))}
+//           {/* NAV */}
+//           <nav className="hidden md:flex items-center gap-10 relative">
+//             {data.menu.map((item, index) => {
+//               if (item.label === "Services") {
+//                 return (
+//                   <div
+//                     key={index}
+//                     className="relative"
+//                     onMouseEnter={handleOpen}
+//                     onMouseLeave={handleClose}
+//                   >
+//                     <button className="flex items-center gap-1 px-4 py-2 rounded-full text-black text-sm font-medium shadow 
+//                               hover:text-white hover:bg-blue-600 transition">
+//                       Services <ChevronDown size={14} />
+//                     </button>
+
+//                     {open && (
+//                       <div
+//                         className="
+//                           absolute left-0 top-full mt-4 
+//                           bg-white rounded-xl shadow-xl 
+//                           w-72 py-3
+//                         "
+//                         onMouseEnter={handleOpen}
+//                         onMouseLeave={handleClose}
+//                       >
+//                         {services?.map((service) => (
+//                           <button
+//                             key={service._id}
+//                             onClick={() => {
+//                               navigate(`/services/${service.slug}`);
+//                               setOpen(false);
+//                             }}
+//                             className="
+//                               block w-full text-left 
+//                               px-6 py-3 text-sm 
+//                               text-black
+//                               hover:bg-blue-600 
+//                               hover:text-white
+//                               transition
+//                             "
+//                           >
+//                             {service.title}
+//                           </button>
+//                         ))}
+//                       </div>
+//                     )}
+//                   </div>
+//                 );
+//               }
+
+//               return (
+//                 <button
+//                   key={index}
+//                   onClick={() => navigate(item.link)}
+//                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
+//                 >
+//                   {item.label}
+//                 </button>
+//               );
+//             })}
 //           </nav>
 
 //           {/* PHONE */}
-//           <div className="hidden md:flex items-center gap-2 text-red-500 font-medium pr-2">
+//           <div className="hidden md:flex items-center gap-2 text-blue-600 font-medium">
 //             <Phone size={16} />
-//             <span className="text-sm tracking-wide">
-//               {data.phone}
-//             </span>
+//             <span>{data.phone}</span>
 //           </div>
 
 //         </div>
@@ -73,21 +125,24 @@
 
 
 
-
-import { Phone, ChevronDown } from "lucide-react";
+import { Phone, ChevronDown, Menu, X } from "lucide-react";
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
-import { useGetPublicServicesQuery } from "../redux/apis/serviceApi";
+
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetAdminServicesQuery } from "../redux/apis/serviceApi";
 
 export default function PublicNavbar() {
   const { data, isLoading } = useGetPublicNavbarQuery();
-  const { data: services } = useGetPublicServicesQuery();
-  const [open, setOpen] = useState(false);
+  const { data: services, isLoading: servicesLoading } =
+    useGetAdminServicesQuery();
+
+  const [open, setOpen] = useState(false);       // desktop dropdown
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile menu
   const timeoutRef = useRef(null);
   const navigate = useNavigate();
 
-  if (isLoading || !data) return null;
+  if (isLoading || servicesLoading || !data) return null;
 
   const handleOpen = () => {
     clearTimeout(timeoutRef.current);
@@ -97,12 +152,18 @@ export default function PublicNavbar() {
   const handleClose = () => {
     timeoutRef.current = setTimeout(() => {
       setOpen(false);
-    }, 250);
+    }, 200);
+  };
+
+  const handleNavigate = (link) => {
+    navigate(link);
+    setMobileOpen(false);
+    setOpen(false);
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-8">
+    <header className="sticky top-0 z-[100] bg-white shadow-sm">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
 
           {/* LOGO */}
@@ -122,7 +183,7 @@ export default function PublicNavbar() {
             </span>
           </div>
 
-          {/* NAV */}
+          {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center gap-10 relative">
             {data.menu.map((item, index) => {
               if (item.label === "Services") {
@@ -134,31 +195,29 @@ export default function PublicNavbar() {
                     onMouseLeave={handleClose}
                   >
                     <button className="flex items-center gap-1 px-4 py-2 rounded-full text-black text-sm font-medium shadow 
-                              hover:text-white hover:bg-blue-600 transition">
+                      hover:text-white hover:bg-blue-600 transition">
                       Services <ChevronDown size={14} />
                     </button>
 
-                    {open && (
+                    {open && services?.length > 0 && (
                       <div
                         className="
-                          absolute left-0 top-full mt-4 
+                          absolute left-0 top-full mt-3 
                           bg-white rounded-xl shadow-xl 
-                          w-72 py-3
+                          w-72 py-2 
+                          z-[200]
                         "
-                        onMouseEnter={handleOpen}
-                        onMouseLeave={handleClose}
                       >
-                        {services?.map((service) => (
+                        {services.map((service) => (
                           <button
                             key={service._id}
-                            onClick={() => {
-                              navigate(`/services/${service.slug}`);
-                              setOpen(false);
-                            }}
+                            onClick={() =>
+                              handleNavigate(`/services/${service.slug}`)
+                            }
                             className="
                               block w-full text-left 
-                              px-6 py-3 text-sm 
-                              text-black
+                              px-5 py-2 text-sm 
+                              text-gray-800
                               hover:bg-blue-600 
                               hover:text-white
                               transition
@@ -176,7 +235,7 @@ export default function PublicNavbar() {
               return (
                 <button
                   key={index}
-                  onClick={() => navigate(item.link)}
+                  onClick={() => handleNavigate(item.link)}
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
                 >
                   {item.label}
@@ -185,14 +244,63 @@ export default function PublicNavbar() {
             })}
           </nav>
 
-          {/* PHONE */}
+          {/* PHONE (DESKTOP) */}
           <div className="hidden md:flex items-center gap-2 text-blue-600 font-medium">
             <Phone size={16} />
             <span>{data.phone}</span>
           </div>
 
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="md:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
+
+      {/* MOBILE MENU */}
+      {mobileOpen && (
+        <div className="md:hidden bg-white shadow-lg px-6 py-4 space-y-3 z-[150]">
+          {data.menu.map((item, index) => {
+            if (item.label === "Services") {
+              return (
+                <div key={index}>
+                  <p className="font-semibold mb-2">Services</p>
+                  {services?.map((service) => (
+                    <button
+                      key={service._id}
+                      onClick={() =>
+                        handleNavigate(`/services/${service.slug}`)
+                      }
+                      className="block w-full text-left px-3 py-2 rounded hover:bg-blue-600 hover:text-white"
+                    >
+                      {service.title}
+                    </button>
+                  ))}
+                </div>
+              );
+            }
+
+            return (
+              <button
+                key={index}
+                onClick={() => handleNavigate(item.link)}
+                className="block w-full text-left px-3 py-2 rounded hover:bg-blue-600 hover:text-white"
+              >
+                {item.label}
+              </button>
+            );
+          })}
+
+          <div className="flex items-center gap-2 pt-3 text-blue-600">
+            <Phone size={16} />
+            <span>{data.phone}</span>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
+

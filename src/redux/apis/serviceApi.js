@@ -31,19 +31,19 @@ export const serviceApi = createApi({
     }),
 
     addService: builder.mutation({
-      query: (data) => ({
+      query: (formData) => ({
         url: "/",
         method: "POST",
-        body: data,   // JSON send
+        body: formData,   // ✅ FormData
       }),
       invalidatesTags: ["Service"],
     }),
 
     updateService: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({ id, formData }) => ({
         url: `/${id}`,
         method: "PUT",
-        body: data,   // JSON send
+        body: formData,   // ✅ FormData
       }),
       invalidatesTags: ["Service"],
     }),
@@ -55,6 +55,10 @@ export const serviceApi = createApi({
       }),
       invalidatesTags: ["Service"],
     }),
+    getpublicServiceBySlug: builder.query({
+  query: (slug) => `/public/${slug}`,
+}),
+
 
   }),
 });
@@ -62,6 +66,7 @@ export const serviceApi = createApi({
 export const {
   useGetPublicServicesQuery,
   useGetServiceBySlugQuery,
+  useGetpublicServiceBySlugQuery,
   useGetAdminServicesQuery,
   useAddServiceMutation,
   useUpdateServiceMutation,

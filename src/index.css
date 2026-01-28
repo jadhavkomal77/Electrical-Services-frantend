@@ -138,3 +138,41 @@
     animation: none;
   }
 }
+
+
+/* ============================= */
+/* 🔘 BUTTON STYLES (ADMIN) */
+/* ============================= */
+
+.btn-blue {
+  @apply bg-blue-600
+    text-white
+    px-4 py-2
+    rounded-xl
+    shadow-sm
+    hover:bg-blue-700
+    active:scale-95
+    transition duration-200;
+}
+
+.btn-red {
+  @apply bg-red-500
+    text-white
+    px-3 py-2
+    rounded-xl
+    shadow-sm
+    hover:bg-red-600
+    active:scale-95
+    transition duration-200;
+}
+
+.btn-green {
+  @apply bg-green-600
+    text-white
+    px-4 py-3
+    rounded-xl
+    shadow-md
+    hover:bg-green-700
+    active:scale-95
+    transition duration-200;
+}
