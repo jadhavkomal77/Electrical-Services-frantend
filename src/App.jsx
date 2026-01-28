@@ -33,6 +33,8 @@ import AdminBookings from "./admin/AdminBookings";
 import BookingSuccess from "./pages/BookingSuccess";
 import AdminContacts from "./admin/AdminContacts";
 import AdminFooter from "./admin/AdminFooter";
+import AdminServicesList from "./admin/AdminServicesList";
+import AdminServiceEdit from "./admin/AdminServiceEdit";
 
 function App() {
   return (
@@ -75,7 +77,10 @@ function App() {
   <Route path="navbar" element={<AdminNavbar />} />
   <Route path="hero" element={<AdminHero />} />
   <Route path="about" element={<AdminAbout />} />
-  <Route path="services" element={<AdminServices />} />
+  <Route path="addservices" element={<AdminServices />} />
+  <Route path="serviceslist" element={<AdminServicesList />} />
+<Route path="services/edit/:id" element={<AdminServiceEdit />} />
+
   <Route path="booking/:id" element={<Booking />} />
 
   {/* PROJECTS */}

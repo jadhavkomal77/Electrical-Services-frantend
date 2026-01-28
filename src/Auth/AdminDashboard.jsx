@@ -27,22 +27,24 @@ export default function AdminDashboardLayout() {
   const admin = data?.admin;
 
   // ✅ UPDATED CLEAN ROUTES
-  const menu = [
-    { name: "Dashboard", path: "/admin", icon: <FaTachometerAlt /> },
-    { name: "Profile", path: "/admin/profile", icon: <FaUser /> },
-    { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
-    { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
-    { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
-    { name: "Services", path: "/admin/services", icon: <FaCogs /> },
-    // { name: "add projects", path: "/admin/addprojects", icon: <FaImage /> },
-    { name: "Projects", path: "/admin/projects", icon: <FaImage /> },
-    { name: "pricing", path: "/admin/pricing", icon: <FaImage /> },
-    { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
-    { name: "Contact", path: "/admin/contacts", icon: <FaClipboardList /> },
-    { name: "Footer", path: "/admin/footer", icon: <FaClipboardList /> },
+const menu = [
+  { name: "Dashboard", path: "/admin", icon: <FaTachometerAlt /> },
+  { name: "Profile", path: "/admin/profile", icon: <FaUser /> },
+  { name: "Navbar", path: "/admin/navbar", icon: <FaList /> },
+  { name: "Hero", path: "/admin/hero", icon: <FaImage /> },
+  { name: "About", path: "/admin/about", icon: <FaInfoCircle /> },
 
+  // ✅ SERVICES (LIST PAGE)
+  { name: "Add Services", path: "/admin/addservices", icon: <FaCogs /> },
+  { name: "Services List", path: "/admin/serviceslist", icon: <FaCogs /> },
 
-  ];
+  { name: "Projects", path: "/admin/projects", icon: <FaImage /> },
+  { name: "Pricing", path: "/admin/pricing", icon: <FaImage /> },
+  { name: "Bookings", path: "/admin/bookings", icon: <FaClipboardList /> },
+  { name: "Contact", path: "/admin/contacts", icon: <FaClipboardList /> },
+  { name: "Footer", path: "/admin/footer", icon: <FaClipboardList /> },
+];
+
 
   const handleLogout = async () => {
     try {

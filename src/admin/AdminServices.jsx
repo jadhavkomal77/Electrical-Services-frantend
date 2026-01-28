@@ -1,159 +1,424 @@
-import React, { useEffect, useState } from "react";
-import { useAddServiceMutation, useGetAdminServicesQuery, useUpdateServiceMutation } from "../redux/apis/serviceApi";
+// import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import {
+//   useAddServiceMutation,
+//   useUpdateServiceMutation,
+// } from "../redux/apis/serviceApi";
 
+// export default function AdminServices({ editData }) {
+//   const [addService] = useAddServiceMutation();
+//   const [updateService] = useUpdateServiceMutation();
+//   const navigate = useNavigate();
 
-export default function AdminServices() {
-  const { data: services, isLoading } = useGetAdminServicesQuery();
+//   const emptyForm = {
+//     title: "",
+//     shortDesc: "",
+//     longDesc: "",
+//     icon: "",
+//     whyChoose: [],
+//     process: [],
+//     technologies: [],
+//     projects: [],
+//   };
+
+//   const [form, setForm] = useState(emptyForm);
+
+//   useEffect(() => {
+//     if (editData) {
+//       setForm({
+//         ...editData,
+//         projects: editData.projects?.map((p) => ({
+//           ...p,
+//           file: null, // new upload only
+//         })) || [],
+//       });
+//     } else {
+//       setForm(emptyForm);
+//     }
+//   }, [editData]);
+
+//   const handleChange = (e) => {
+//     setForm({ ...form, [e.target.name]: e.target.value });
+//   };
+
+//   /* PROJECTS */
+//   const addProject = () =>
+//     setForm({
+//       ...form,
+//       projects: [
+//         ...form.projects,
+//         { title: "", desc: "", image: "", file: null, tech: [] },
+//       ],
+//     });
+
+//   const updateProject = (i, field, value) => {
+//     const arr = [...form.projects];
+//     arr[i][field] = value;
+//     setForm({ ...form, projects: arr });
+//   };
+
+//   const handleProjectImage = (i, file) => {
+//     const arr = [...form.projects];
+//     arr[i].file = file;
+//     setForm({ ...form, projects: arr });
+//   };
+
+//   const removeProject = (i) => {
+//     setForm({
+//       ...form,
+//       projects: form.projects.filter((_, idx) => idx !== i),
+//     });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const fd = new FormData();
+//     fd.append("title", form.title);
+//     fd.append("shortDesc", form.shortDesc);
+//     fd.append("longDesc", form.longDesc);
+//     fd.append("icon", form.icon);
+//     fd.append("whyChoose", JSON.stringify(form.whyChoose));
+//     fd.append("process", JSON.stringify(form.process));
+//     fd.append("technologies", JSON.stringify(form.technologies));
+
+//     fd.append(
+//       "projects",
+//       JSON.stringify(
+//         form.projects.map((p) => ({
+//           title: p.title,
+//           desc: p.desc,
+//           image: p.image || "",
+//           tech: p.tech || [],
+//         }))
+//       )
+//     );
+
+//     // append files only for new uploads
+//     form.projects.forEach((p) => {
+//       if (p.file) {
+//         fd.append("projectImages", p.file);
+//       }
+//     });
+
+//     try {
+//       if (editData) {
+//         await updateService({ id: editData._id, data: fd }).unwrap();
+//         toast.success("Service Updated Successfully");
+//       } else {
+//         await addService(fd).unwrap();
+//         toast.success("Service Added Successfully");
+//       }
+
+//       navigate("/admin/serviceslist");
+//     } catch (err) {
+//       toast.error("Something went wrong");
+//       console.error(err);
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-6 space-y-8">
+//       <h2 className="text-2xl font-bold">
+//         {editData ? "Update Service" : "Create Service"}
+//       </h2>
+
+//       {/* BASIC INFO */}
+//       <div className="bg-white p-6 grid md:grid-cols-2 gap-4">
+//         <input className="input" name="title" placeholder="Title" value={form.title} onChange={handleChange} />
+//         <input className="input" name="icon" placeholder="Icon" value={form.icon} onChange={handleChange} />
+//         <textarea className="input md:col-span-2" name="shortDesc" placeholder="Short Desc" value={form.shortDesc} onChange={handleChange} />
+//         <textarea className="input md:col-span-2" name="longDesc" placeholder="Long Desc" value={form.longDesc} onChange={handleChange} />
+//       </div>
+
+//       {/* PROJECTS */}
+//       <Section title="Projects">
+//         {form.projects.map((p, i) => (
+//           <Card key={i}>
+//             <div className="flex justify-between items-center">
+//               <input
+//                 className="input flex-1"
+//                 placeholder="Title"
+//                 value={p.title}
+//                 onChange={(e) => updateProject(i, "title", e.target.value)}
+//               />
+//               <button
+//                 type="button"
+//                 onClick={() => removeProject(i)}
+//                 className="ml-3 text-red-600 font-bold"
+//               >
+//                 ✕
+//               </button>
+//             </div>
+
+//             <input type="file" accept="image/*" onChange={(e) => handleProjectImage(i, e.target.files[0])} />
+
+//             {p.image && !p.file && (
+//               <img src={p.image} alt="" className="w-32 h-20 object-cover rounded" />
+//             )}
+
+//             <textarea
+//               className="input"
+//               placeholder="Description"
+//               value={p.desc}
+//               onChange={(e) => updateProject(i, "desc", e.target.value)}
+//             />
+//           </Card>
+//         ))}
+//         <AddBtn onClick={addProject} text="Add Project" />
+//       </Section>
+
+//       <button className="w-full bg-blue-600 text-white py-3 rounded">
+//         {editData ? "Update Service" : "Create Service"}
+//       </button>
+//     </form>
+//   );
+// }
+
+// /* UI Helpers */
+// const Section = ({ title, children }) => (
+//   <div className="bg-gray-50 p-6 space-y-4">
+//     <h3 className="text-lg font-semibold">{title}</h3>
+//     {children}
+//   </div>
+// );
+
+// const Card = ({ children }) => (
+//   <div className="bg-white border p-4 space-y-2 rounded">{children}</div>
+// );
+
+// const AddBtn = ({ onClick, text }) => (
+//   <button type="button" onClick={onClick} className="text-blue-600 font-medium">
+//     + {text}
+//   </button>
+// );
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  useAddServiceMutation,
+  useUpdateServiceMutation,
+} from "../redux/apis/serviceApi";
+
+export default function AdminServices({ editData }) {
   const [addService] = useAddServiceMutation();
   const [updateService] = useUpdateServiceMutation();
+  const navigate = useNavigate();
 
-  const [form, setForm] = useState({
+  const emptyForm = {
     title: "",
     shortDesc: "",
-    icon: "⚡",
-  });
+    longDesc: "",
+    icon: "",
+    whyChoose: [],
+    process: [],
+    technologies: [],
+    projects: [],
+  };
 
-  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+
+  useEffect(() => {
+    if (editData) {
+      setForm({
+        ...editData,
+        projects:
+          editData.projects?.map((p) => ({
+            ...p,
+            file: null, // only for new upload
+          })) || [],
+      });
+    } else {
+      setForm(emptyForm);
+    }
+  }, [editData]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const resetForm = () => {
-    setForm({ title: "", shortDesc: "", icon: "⚡" });
-    setEditingId(null);
+  /* PROJECTS */
+  const addProject = () =>
+    setForm({
+      ...form,
+      projects: [
+        ...form.projects,
+        { title: "", desc: "", image: "", file: null, tech: [] },
+      ],
+    });
+
+  const updateProject = (i, field, value) => {
+    const arr = [...form.projects];
+    arr[i][field] = value;
+    setForm({ ...form, projects: arr });
+  };
+
+  const handleProjectImage = (i, file) => {
+    const arr = [...form.projects];
+    arr[i].file = file; // mark new file
+    setForm({ ...form, projects: arr });
+  };
+
+  const removeProject = (i) => {
+    setForm({
+      ...form,
+      projects: form.projects.filter((_, idx) => idx !== i),
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      await updateService({
-        id: editingId,
-        data: form,
-      });
-    } else {
-      await addService(form);
+    const fd = new FormData();
+    fd.append("title", form.title);
+    fd.append("shortDesc", form.shortDesc);
+    fd.append("longDesc", form.longDesc);
+    fd.append("icon", form.icon);
+    fd.append("whyChoose", JSON.stringify(form.whyChoose));
+    fd.append("process", JSON.stringify(form.process));
+    fd.append("technologies", JSON.stringify(form.technologies));
+
+    // 🔥 important part
+    fd.append(
+      "projects",
+      JSON.stringify(
+        form.projects.map((p) => ({
+          title: p.title,
+          desc: p.desc,
+          image: p.file ? "__new__" : p.image || "",
+          tech: p.tech || [],
+        }))
+      )
+    );
+
+    // append only new files
+    form.projects.forEach((p) => {
+      if (p.file) {
+        fd.append("projectImages", p.file);
+      }
+    });
+
+    try {
+      if (editData) {
+        await updateService({ id: editData._id, data: fd }).unwrap();
+        toast.success("Service Updated Successfully");
+      } else {
+        await addService(fd).unwrap();
+        toast.success("Service Added Successfully");
+      }
+
+      navigate("/admin/serviceslist");
+    } catch (err) {
+      toast.error("Something went wrong");
+      console.error(err);
     }
-
-    resetForm();
   };
-
-  const handleEdit = (service) => {
-    setEditingId(service._id);
-    setForm({
-      title: service.title,
-      shortDesc: service.shortDesc,
-      icon: service.icon || "⚡",
-    });
-  };
-
-  const toggleActive = async (service) => {
-    await updateService({
-      id: service._id,
-      data: { ...service, isActive: !service.isActive },
-    });
-  };
-
-  if (isLoading) return <p>Loading services...</p>;
 
   return (
-    <div className="max-w-6xl bg-white shadow rounded-xl p-8">
-      <h2 className="text-2xl font-bold mb-2">Services</h2>
-      <p className="text-gray-500 mb-8">
-        Manage all services shown on the website.
-      </p>
+    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-6 space-y-8">
+      <h2 className="text-2xl font-bold">
+        {editData ? "Update Service" : "Create Service"}
+      </h2>
 
-      {/* ADD / EDIT FORM */}
-      <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-6 mb-12">
+      {/* BASIC INFO */}
+      <div className="bg-white p-6 grid md:grid-cols-2 gap-4">
         <input
-          type="text"
+          className="input"
           name="title"
-          placeholder="Service Title"
+          placeholder="Title"
           value={form.title}
           onChange={handleChange}
-          required
-          className="border px-4 py-3 rounded"
         />
-
         <input
-          type="text"
-          name="shortDesc"
-          placeholder="Short Description"
-          value={form.shortDesc}
-          onChange={handleChange}
-          required
-          className="border px-4 py-3 rounded"
-        />
-
-        <input
-          type="text"
+          className="input"
           name="icon"
-          placeholder="Icon (⚡ 🔧 💡)"
+          placeholder="Icon"
           value={form.icon}
           onChange={handleChange}
-          className="border px-4 py-3 rounded"
         />
-
-        <div className="md:col-span-3 flex gap-4">
-          <button
-            className="bg-red-500 text-white px-8 py-3 rounded hover:bg-red-600"
-          >
-            {editingId ? "Update Service" : "Add Service"}
-          </button>
-
-          {editingId && (
-            <button
-              type="button"
-              onClick={resetForm}
-              className="border px-8 py-3 rounded"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </form>
-
-      {/* SERVICES LIST */}
-      <div className="space-y-4">
-        {services?.map((service) => (
-          <div
-            key={service._id}
-            className="flex items-center justify-between border rounded-lg p-5"
-          >
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">{service.icon || "⚡"}</span>
-
-              <div>
-                <h4 className="font-semibold text-lg">
-                  {service.title}
-                </h4>
-                <p className="text-gray-500 text-sm">
-                  {service.shortDesc}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => handleEdit(service)}
-                className="text-blue-600 font-medium"
-              >
-                Edit
-              </button>
-
-              <button
-                onClick={() => toggleActive(service)}
-                className={`font-medium ${
-                  service.isActive ? "text-green-600" : "text-gray-400"
-                }`}
-              >
-                {service.isActive ? "Active" : "Inactive"}
-              </button>
-            </div>
-          </div>
-        ))}
+        <textarea
+          className="input md:col-span-2"
+          name="shortDesc"
+          placeholder="Short Desc"
+          value={form.shortDesc}
+          onChange={handleChange}
+        />
+        <textarea
+          className="input md:col-span-2"
+          name="longDesc"
+          placeholder="Long Desc"
+          value={form.longDesc}
+          onChange={handleChange}
+        />
       </div>
-    </div>
+
+      {/* PROJECTS */}
+      <Section title="Projects">
+        {form.projects.map((p, i) => (
+          <Card key={i}>
+            <div className="flex justify-between items-center">
+              <input
+                className="input flex-1"
+                placeholder="Title"
+                value={p.title}
+                onChange={(e) => updateProject(i, "title", e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => removeProject(i)}
+                className="ml-3 text-red-600 font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleProjectImage(i, e.target.files[0])}
+            />
+
+            {p.image && !p.file && (
+              <img
+                src={p.image}
+                alt=""
+                className="w-32 h-20 object-cover rounded"
+              />
+            )}
+
+            <textarea
+              className="input"
+              placeholder="Description"
+              value={p.desc}
+              onChange={(e) => updateProject(i, "desc", e.target.value)}
+            />
+          </Card>
+        ))}
+        <AddBtn onClick={addProject} text="Add Project" />
+      </Section>
+
+      <button className="w-full bg-blue-600 text-white py-3 rounded">
+        {editData ? "Update Service" : "Create Service"}
+      </button>
+    </form>
   );
 }
+
+/* UI Helpers */
+const Section = ({ title, children }) => (
+  <div className="bg-gray-50 p-6 space-y-4">
+    <h3 className="text-lg font-semibold">{title}</h3>
+    {children}
+  </div>
+);
+
+const Card = ({ children }) => (
+  <div className="bg-white border p-4 space-y-2 rounded">{children}</div>
+);
+
+const AddBtn = ({ onClick, text }) => (
+  <button type="button" onClick={onClick} className="text-blue-600 font-medium">
+    + {text}
+  </button>
+);

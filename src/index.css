@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================= */
-/* 🌊 ANIMATIONS (STANDARD) */
+/* 🌊 ANIMATIONS */
 /* ============================= */
 
 @keyframes fadeInLeft {
@@ -92,6 +92,7 @@
     px-4 py-2
     text-sm text-gray-800
     bg-white
+    shadow-sm
     focus:outline-none
     focus:ring-2
     focus:ring-blue-500
@@ -100,7 +101,7 @@
 }
 
 /* ============================= */
-/* 🌟 Extra Footer Animations */
+/* 🌟 Extra Fade Animation */
 /* ============================= */
 
 @keyframes fadeIn {
@@ -118,15 +119,16 @@
   animation: fadeIn 0.8s ease-out both;
 }
 
-/* Delay helpers */
+/* ============================= */
+/* ⏱️ Delay helpers */
+/* ============================= */
+
 .delay-100 {
   animation-delay: 0.1s;
 }
-
 .delay-200 {
   animation-delay: 0.2s;
 }
-
 .delay-300 {
   animation-delay: 0.3s;
 }
@@ -136,4 +138,3 @@
     animation: none;
   }
 }
-
