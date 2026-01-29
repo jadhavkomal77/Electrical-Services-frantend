@@ -16,17 +16,17 @@ export const serviceApi = createApi({
 
     /* 🌍 Public */
     getPublicServices: builder.query({
-      query: () => "/public",
+      query: () => "/",               // ✅ list services
       providesTags: ["Service"],
     }),
 
-    getServiceBySlug: builder.query({
-      query: (slug) => `/public/${slug}`,
+    getPublicServiceBySlug: builder.query({
+      query: (slug) => `/public/${slug}`, // ✅ single service
     }),
 
     /* 🔐 Admin */
     getAdminServices: builder.query({
-      query: () => "/",
+      query: () => "/admin",
       providesTags: ["Service"],
     }),
 
@@ -34,7 +34,7 @@ export const serviceApi = createApi({
       query: (formData) => ({
         url: "/",
         method: "POST",
-        body: formData,   // ✅ FormData
+        body: formData,
       }),
       invalidatesTags: ["Service"],
     }),
@@ -43,7 +43,7 @@ export const serviceApi = createApi({
       query: ({ id, formData }) => ({
         url: `/${id}`,
         method: "PUT",
-        body: formData,   // ✅ FormData
+        body: formData,
       }),
       invalidatesTags: ["Service"],
     }),
@@ -55,18 +55,13 @@ export const serviceApi = createApi({
       }),
       invalidatesTags: ["Service"],
     }),
-    getpublicServiceBySlug: builder.query({
-  query: (slug) => `/public/${slug}`,
-}),
-
 
   }),
 });
 
 export const {
   useGetPublicServicesQuery,
-  useGetServiceBySlugQuery,
-  useGetpublicServiceBySlugQuery,
+  useGetPublicServiceBySlugQuery,
   useGetAdminServicesQuery,
   useAddServiceMutation,
   useUpdateServiceMutation,

@@ -35,6 +35,8 @@ import AdminContacts from "./admin/AdminContacts";
 import AdminFooter from "./admin/AdminFooter";
 import AdminServicesList from "./admin/AdminServicesList";
 import AdminServiceEdit from "./admin/AdminServiceEdit";
+import NotFound from "./layout/NotFound";
+import WhatsappSettings from "./admin/WhatsappSettings";
 
 function App() {
   return (
@@ -53,9 +55,10 @@ function App() {
   <Route path="pricing" element={<Pricing />} />
   <Route path="/booking-success" element={<BookingSuccess />} />
 
-  ✅ <Route path="booking/:id" element={<Booking />} />
-
+ <Route path="booking/:id" element={<Booking />} />
   <Route path="contact" element={<Contact />} />
+
+      <Route path="*" element={<NotFound />} />
 </Route>
 
 
@@ -79,21 +82,23 @@ function App() {
   <Route path="about" element={<AdminAbout />} />
   <Route path="addservices" element={<AdminServices />} />
   <Route path="serviceslist" element={<AdminServicesList />} />
-<Route path="services/edit/:id" element={<AdminServiceEdit />} />
-
+  <Route path="services/edit/:id" element={<AdminServiceEdit />} />
   <Route path="booking/:id" element={<Booking />} />
-
   {/* PROJECTS */}
   <Route path="projects" element={<AdminProjects />} />
-  <Route path="projects/new" element={<AddAdminProject />} />   {/* ADD */}
-  <Route path="projects/edit/:id" element={<AddAdminProject />} /> {/* EDIT */}
+  <Route path="projects/new" element={<AddAdminProject />} />  
+  <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
 
   <Route path="pricing" element={<AdminPricing />} /> 
   <Route path="bookings" element={<AdminBookings />} />
   <Route path="contacts" element={<AdminContacts />} />
+  <Route path="whatsappsettings" element={<WhatsappSettings />} />
   <Route path="footer" element={<AdminFooter />} />
-</Route>
 
+   <Route path="*" element={<NotFound />} />
+   </Route>
+
+       <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -213,14 +213,15 @@
 
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetServiceBySlugQuery } from "../redux/apis/serviceApi";
+import { useGetPublicServiceBySlugQuery } from "../redux/apis/serviceApi";
+// import { useGetServiceBySlugQuery } from "../redux/apis/serviceApi";
 
 export default function ServiceDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
   const { data: service, isLoading, isError } =
-    useGetServiceBySlugQuery(slug);
+    useGetPublicServiceBySlugQuery(slug);
 
   if (isLoading) return <p className="p-10 text-center">Loading...</p>;
   if (isError || !service)
@@ -360,12 +361,12 @@ export default function ServiceDetails() {
       )}
 
       {/* ================= CTA ================= */}
-      <section className="bg-gray-900 py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center text-white">
+      <section className="bg-gray-100 py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center text-black">
           <h2 className="text-3xl font-bold mb-4">
             Interested in this service?
           </h2>
-          <p className="text-gray-300 mb-8">
+          <p className="text-black mb-8">
             Contact us today for expert assistance and free consultation.
           </p>
 

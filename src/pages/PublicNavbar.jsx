@@ -130,12 +130,12 @@ import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
 
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetAdminServicesQuery } from "../redux/apis/serviceApi";
+import {useGetPublicServicesQuery } from "../redux/apis/serviceApi";
 
 export default function PublicNavbar() {
   const { data, isLoading } = useGetPublicNavbarQuery();
   const { data: services, isLoading: servicesLoading } =
-    useGetAdminServicesQuery();
+    useGetPublicServicesQuery();
 
   const [open, setOpen] = useState(false);       // desktop dropdown
   const [mobileOpen, setMobileOpen] = useState(false); // mobile menu
