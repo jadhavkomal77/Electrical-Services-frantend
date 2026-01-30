@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,9 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
 export default function AdminLogin() {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
 
   const [
     adminLogin,
@@ -67,7 +69,7 @@ export default function AdminLogin() {
             <input
               type="email"
               {...formik.getFieldProps("email")}
-              placeholder="admin@email.com"
+              placeholder="Enter Your Email"
               className={`w-full mt-1 px-4 py-2 rounded-lg border ${
                 formik.touched.email && formik.errors.email
                   ? "border-red-500"
@@ -82,26 +84,41 @@ export default function AdminLogin() {
           </div>
 
           {/* PASSWORD */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              {...formik.getFieldProps("password")}
-              placeholder="••••••••"
-              className={`w-full mt-1 px-4 py-2 rounded-lg border ${
-                formik.touched.password && formik.errors.password
-                  ? "border-red-500"
-                  : "border-gray-300"
-              } focus:ring-2 focus:ring-indigo-400 outline-none`}
-            />
-            {formik.touched.password && formik.errors.password && (
-              <p className="text-xs text-red-500 mt-1">
-                {formik.errors.password}
-              </p>
-            )}
-          </div>
+        
+<div>
+  <label className="text-sm font-medium text-gray-700">
+    Password
+  </label>
+
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      {...formik.getFieldProps("password")}
+      placeholder="Enter Your Password"
+      className={`w-full mt-1 px-4 py-2 pr-10 rounded-lg border ${
+        formik.touched.password && formik.errors.password
+          ? "border-red-500"
+          : "border-gray-300"
+      } focus:ring-2 focus:ring-indigo-400 outline-none`}
+    />
+
+    {/* EYE ICON */}
+    <span
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-500"
+    >
+      {showPassword ? "🙈" : "👁️"}
+    </span>
+  </div>
+
+  {formik.touched.password && formik.errors.password && (
+    <p className="text-xs text-red-500 mt-1">
+      {formik.errors.password}
+    </p>
+  )}
+</div>
+
+          
 
           {/* BUTTON */}
           <button
