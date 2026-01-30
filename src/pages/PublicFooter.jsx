@@ -11,12 +11,23 @@ import {
 
 import { useGetPublicNavbarQuery } from "../redux/apis/navbarApi";
 import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
+import { Link } from "react-router-dom";
 
 export default function PublicFooter() {
   const { data: footer } = useGetPublicFooterQuery();
   const { data: navbar } = useGetPublicNavbarQuery();
 
   if (!footer || !navbar) return null;
+
+  const routeMap = {
+  Home: "/",
+  About: "/about",
+  Services: "/services",
+  Projects: "/projects",
+  Pricing: "/pricing",
+  Contact: "/contact",
+};
+
 
   return (
     <footer className="bg-gradient-to-br from-[#020617] via-[#0B1120] to-black text-gray-300">
@@ -59,7 +70,7 @@ export default function PublicFooter() {
         </div>
 
         {/* QUICK LINKS */}
-        <div className="animate-fade-in delay-100">
+        {/* <div className="animate-fade-in delay-100">
           <h3 className="text-white font-semibold mb-4 text-lg">
             Quick Links
           </h3>
@@ -73,10 +84,30 @@ export default function PublicFooter() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
+
+        {/* QUICK LINKS */}
+<div className="animate-fade-in delay-100">
+  <h3 className="text-white font-semibold mb-4 text-lg">
+    Quick Links
+  </h3>
+  <ul className="space-y-2 text-sm">
+    {footer.quickLinks?.map((item) => (
+      <li key={item}>
+        <Link
+          to={routeMap[item] || "/"}
+          className="hover:text-orange-400 hover:translate-x-1 transition-all duration-200 block"
+        >
+          {item}
+        </Link>
+      </li>
+    ))}
+  </ul>
+</div>
+
 
         {/* IMPORTANT LINKS */}
-        <div className="animate-fade-in delay-200">
+        {/* <div className="animate-fade-in delay-200">
           <h3 className="text-white font-semibold mb-4 text-lg">
             Important Links
           </h3>
@@ -90,7 +121,27 @@ export default function PublicFooter() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
+
+{/* IMPORTANT LINKS */}
+<div className="animate-fade-in delay-200">
+  <h3 className="text-white font-semibold mb-4 text-lg">
+    Important Links
+  </h3>
+  <ul className="space-y-2 text-sm">
+    {footer.importantLinks?.map((item) => (
+      <li key={item}>
+        <Link
+          to={routeMap[item] || "/"}
+          className="hover:text-orange-400 hover:translate-x-1 transition-all duration-200 block"
+        >
+          {item}
+        </Link>
+      </li>
+    ))}
+  </ul>
+</div>
+
 
         {/* CONTACT INFO */}
         <div className="animate-fade-in delay-300">

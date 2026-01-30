@@ -43,62 +43,58 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-       {/* ================= PUBLIC ================= */}
-<Route element={<PublicLayout />}>
-  <Route index element={<Home />} />
-  <Route path="home" element={<Hero />} />
-  <Route path="about" element={<About />} />
-  <Route path="services" element={<Services />} />
-  <Route path="services/:slug" element={<ServiceDetails />} />
-  <Route path="projects" element={<Projects />} />
-  <Route path="projects/:slug" element={<ProjectDetails />} />
-  <Route path="pricing" element={<Pricing />} />
-  <Route path="/booking-success" element={<BookingSuccess />} />
+       {/*  PUBLIC  */}
+        <Route element={<PublicLayout />}>
+              <Route index element={<Home />} />
+              <Route path="home" element={<Hero />} />
+              <Route path="about" element={<About />} />
+              <Route path="services" element={<Services />} />
+              <Route path="services/:slug" element={<ServiceDetails />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="projects/:slug" element={<ProjectDetails />} />
+              <Route path="pricing" element={<Pricing />} />
+              <Route path="/booking-success" element={<BookingSuccess />} />
+            
+              <Route path="booking/:id" element={<Booking />} />
+              <Route path="contact" element={<Contact />} />
+            
+              <Route path="*" element={<NotFound />} />
+      </Route>
 
- <Route path="booking/:id" element={<Booking />} />
-  <Route path="contact" element={<Contact />} />
 
-      <Route path="*" element={<NotFound />} />
-</Route>
-
-
-        {/* ================= ADMIN AUTH ================= */}
+        {/*  ADMIN AUTH  */}
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/adminregister" element={<AdminRegister />} />
 
-        {/* ================= ADMIN PANEL ================= */}
-       <Route
-  path="/admin"
-  element={
-    <AdminProtected>
-      <AdminDashboard />
-    </AdminProtected>
-  }
->
-  <Route index element={<AdminHome />} />
-  <Route path="profile" element={<AdminProfile />} />
-  <Route path="navbar" element={<AdminNavbar />} />
-  <Route path="hero" element={<AdminHero />} />
-  <Route path="about" element={<AdminAbout />} />
-  <Route path="addservices" element={<AdminServices />} />
-  <Route path="serviceslist" element={<AdminServicesList />} />
-  <Route path="services/edit/:id" element={<AdminServiceEdit />} />
-  <Route path="booking/:id" element={<Booking />} />
-  {/* PROJECTS */}
-  <Route path="projects" element={<AdminProjects />} />
-  <Route path="projects/new" element={<AddAdminProject />} />  
-  <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
-
-  <Route path="pricing" element={<AdminPricing />} /> 
-  <Route path="bookings" element={<AdminBookings />} />
-  <Route path="contacts" element={<AdminContacts />} />
-  <Route path="whatsappsettings" element={<WhatsappSettings />} />
-  <Route path="footer" element={<AdminFooter />} />
-
-   <Route path="*" element={<NotFound />} />
-   </Route>
-
-       <Route path="*" element={<NotFound />} />
+        {/*  ADMIN PANEL  */}
+        <Route
+            path="/admin"
+               element={<AdminProtected> <AdminDashboard /> </AdminProtected> }>
+                
+          <Route index element={<AdminHome />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="navbar" element={<AdminNavbar />} />
+          <Route path="hero" element={<AdminHero />} />
+          <Route path="about" element={<AdminAbout />} />
+          <Route path="addservices" element={<AdminServices />} />
+          <Route path="serviceslist" element={<AdminServicesList />} />
+          <Route path="services/edit/:id" element={<AdminServiceEdit />} />
+          <Route path="booking/:id" element={<Booking />} />
+          {/* PROJECTS */}
+          <Route path="projects" element={<AdminProjects />} />
+          <Route path="projects/new" element={<AddAdminProject />} />  
+          <Route path="projects/edit/:id" element={<AddAdminProject />} /> 
+        
+          <Route path="pricing" element={<AdminPricing />} /> 
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="contacts" element={<AdminContacts />} />
+          <Route path="whatsappsettings" element={<WhatsappSettings />} />
+          <Route path="footer" element={<AdminFooter />} />
+        
+           <Route path="*" element={<NotFound />} />
+           </Route>
+        
+               <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
