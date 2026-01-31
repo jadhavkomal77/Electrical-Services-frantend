@@ -5,30 +5,8 @@ import { useGetPublicHeroQuery } from "../redux/apis/heroApi";
 export default function Hero() {
   const { data: hero, isLoading } = useGetPublicHeroQuery();
 
-  // if (isLoading || !hero) return null;
- if (isLoading) {
-    return (
-      <section className="relative bg-gray-900 text-white">
-        <div className="absolute inset-0 bg-black/60"></div>
+  if (isLoading || !hero) return null;
 
-        <div className="relative max-w-7xl mx-auto px-8 py-44">
-          <div className="max-w-2xl space-y-6 animate-pulse">
-            {/* Title skeleton */}
-            <div className="h-10 bg-gray-600 rounded w-3/4"></div>
-
-            {/* Subtitle skeleton */}
-            <div className="h-4 bg-gray-600 rounded w-full"></div>
-            <div className="h-4 bg-gray-600 rounded w-5/6"></div>
-
-            {/* Button skeleton */}
-            <div className="h-12 bg-red-500/60 rounded w-48"></div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!hero) return null;
   return (
     <section
       className="relative bg-cover bg-center text-white"
