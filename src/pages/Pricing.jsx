@@ -7,10 +7,7 @@ export default function Pricing() {
   const [currency, setCurrency] = useState("₹");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Pricing | Our Plans";
-  }, []);
-
+ 
   if (isLoading) {
     return <div className="py-32 text-center">Loading pricing...</div>;
   }
@@ -107,3 +104,5 @@ export default function Pricing() {
     </>
   );
 }
+
+

@@ -7,11 +7,6 @@ export default function Projects() {
   const navigate = useNavigate();
   const { data: projects = [], isLoading } = useGetPublicProjectsQuery();
 
-  // SEO title
-  useEffect(() => {
-    document.title = "Projects | Our Work";
-  }, []);
-
   if (isLoading) {
     return (
       <div className="py-32 text-center text-lg font-medium text-gray-600">

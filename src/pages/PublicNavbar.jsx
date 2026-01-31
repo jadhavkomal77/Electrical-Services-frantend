@@ -52,9 +52,18 @@ export default function PublicNavbar() {
                 ⚡
               </div>
             )}
-            <span className="text-lg font-semibold text-gray-900">
+            {/* <span className="text-lg font-semibold text-gray-900">
               {data.logoText}
-            </span>
+            </span> */}
+            <div className="flex flex-col leading-tight">
+  <span className="text-lg font-bold text-gray-900 uppercase">
+    {data.logoText?.split(" ")[0]}
+  </span>
+  <span className="text-xs font-medium tracking-wide text-red-500 uppercase">
+    {data.logoText?.split(" ").slice(1).join(" ")}
+  </span>
+</div>
+
           </div>
 
           {/* DESKTOP NAV */}
